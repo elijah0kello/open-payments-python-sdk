@@ -5,3 +5,11 @@
 </p>
 
 > This project is still a work in progress
+
+## Project RoadMap
+|Item | Description| Date |
+|-----|------------|-------|
+|Project Planning|This will involve conducting any research, planning and setting up the project repository with structure and any package publishing workflows before project execution begins | 10th Jan 2024|
+| 
+
+
