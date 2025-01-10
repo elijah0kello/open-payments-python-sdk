@@ -25,7 +25,7 @@ Here is an outline of the project implementation roadmap and release timelines
 
 |Item | Description| Date |
 |-----|------------|-------|
-|Project Planning|This will involve conducting any research, planning and setting up the project repository with structure and any package publishing workflows before project execution of functional requirements begins | 10th Jan 2024|
+|Project Planning|This will involve conducting any research, planning and setting up the project repository with structure and any package publishing workflows before project execution of functional requirements begins | 10th Jan 2025|
 
 
 
