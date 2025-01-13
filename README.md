@@ -30,7 +30,7 @@ Here is an outline of the project implementation roadmap and release timelines
 | Setup folder structure and initialize project | This will involve setting up the project by adding code folder structure, linting, tests, pre commit checks and pipeline configuration. Creating a PR to the upstream and getting feedback | 10th March 2025 | 3 weeks | 31st March 2025 | Not Started ⚫️ |
 |Implementing auth functions | Implementing the Authentication and Authorization functions of the SDK including creating any required libraries based on the design adopted. Creating a PR and getting feedback from the community and any maintainers. | 31st March 2025 | 1.5 months | 15th May 2025 | Not Started ⚫️ |
 |Implementing payments functions | Implementing the payments functions of the SDK including creating or updating any required libraries based on the design adopted. Creating a PR and getting feedback from the community and any maintainers. | 15th May 2025 | 2 months | 15th July 2025 | Not Started ⚫️ |
-| Implementing feedback from Pull Requests | Working on implementing PR feedback to ensure quality of the SDK. | TBD | TBD | Not Started ⚫️ |
+| Implementing feedback from Pull Requests | Working on implementing PR feedback to ensure quality of the SDK. | TBD | TBD |TDB| Not Started ⚫️ |
 
 
 
