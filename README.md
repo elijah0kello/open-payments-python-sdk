@@ -16,16 +16,23 @@ Open Payments is an open API standard that can be implemented by account servici
 - Subscriptions
 - Invoice Payments
 
-An Open Payments server runs two sub-systems, a resource server which exposes APIs for performing functions against the underlying accounts and and authorisation server which exposes APIs compliant with the GNAP standard for getting grants to access the resource server APIs.
+An Open Payments server runs two sub-systems, a resource server which exposes APIs for performing functions against the underlying accounts and authorization server which exposes APIs compliant with the GNAP standard for getting grants to access the resource server APIs.
 
 ## Project RoadMap
-This project will draw inspiration from the typescript Open Payments SDK with a python implementation. The goal is to have the SDK library(s) hosted on [PyPi](https://pypi.org/) therefore installable via pip
+This project will draw inspiration from the typescript Open Payments SDK with a python implementation. The goal is to have the SDK library(s) hosted on [PyPi](https://pypi.org/) and therefore installable via pip
 
 Here is an outline of the project implementation roadmap and release timelines
 
-|Item | Description| Date |
-|-----|------------|-------|
-|Project Planning|This will involve conducting any research, planning and setting up the project repository with structure and any package publishing workflows before project execution of functional requirements begins | 10th Jan 2025|
+|Item | Description| Start Date | Duration |End Date |Status 
+|-----|------------|-------|---------|--------|-------|
+|Project Planning |This will involve conducting detailed research about open payments, planning the project execution and generating any pre project requirements | 10th Jan 2025| 1 month|10th Feb 2025 |In Progress 🟡|
+|Designing the SDK while benchmarking on Typescript OP SDK| This will involve designing of the SDK based on the already existing Typescript Open Payments SDK. The milestone for this phase will be a design documentation for the SDK. Make design decisions regarding the `openapi`, `http-signature` and `py-openpayments-sdk` libraries and implementation plans |10th Feb 2025 | 1 month | 10th March 2025| Not Started ⚫️|
+| Setup folder structure and initialize project | This will involve setting up the project by adding code folder structure, linting, tests, pre commit checks and pipeline configuration. Creating a PR to the upstream and getting feedback | 10th March 2025 | 3 weeks | 24th March 2025 | Not Started ⚫️ |
+|Implementing auth functions | Implementing the Authentication and Authorization functions of the SDK including creating any required libraries based on the design adopted. Creating a PR and getting feedback from the community and any maintainers. | 24th March 2025 | 1.5 months | 24th April 2025 | Not Started ⚫️ |
+|Implementing payments functions | Implementing the payments functions of the SDK including creating or updating any required libraries based on the design adopted. Creating a PR and getting feedback from the community and any maintainers. | 24th March 2025 | 2 months | 24th April 2025 | Not Started ⚫️ |
+| Implementing feedback from Pull Requests | Working on implementing PR feedback to ensure quality of the SDK. | TBD | TBD | Not Started ⚫️ |
+
+
 
 
 
