@@ -1,7 +1,7 @@
 [project]
-name = "openpayments-python-sdk"
+name = "open-payments-sdk"
 version = "0.1.0"
-description = "Python SDK implementation for openpayments API"
+description = "Python SDK implementation for open-payments API"
 authors = [
     {name = "Yiannis Giannelos",email = "johngiannelos@gmail.com"}
 ]
@@ -10,7 +10,6 @@ readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
 ]
-
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
