@@ -7,7 +7,7 @@ authors = [
 ]
 license = {text = "Apache-2.0"}
 readme = "README.md"
-requires-python = "3.11"
+requires-python = ">=3.11"
 dependencies = [
 ]
 
@@ -15,3 +15,10 @@ dependencies = [
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.group.dev.dependencies]
+ipdb = "^0.13.13"
+isort = "^6.0.0"
+black = "^25.1.0"
+pyflakes = "^3.2.0"
+
