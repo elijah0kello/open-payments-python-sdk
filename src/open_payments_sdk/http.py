@@ -11,25 +11,19 @@ class Client:
         self.user_agent = cfg.user_agent
 
     @staticmethod
-    def is_json(res):
-        return res.headers["content-type"] == "application/json"
-
-    def parse_response(self, res: httpx.Response):
-        if self.is_json(res):
-            return res.json()
-        return res.text
-
-    def get(self, url, params=None, headers=None):
+    def get(url, params=None, headers=None):
         res = httpx.get(url, params=params, headers=headers)
         res.raise_for_status()
-        return self.parse_response(res)
+        return res.text
 
-    def post(self, url, data=None, headers=None):
+    @staticmethod
+    def post(url, data=None, headers=None):
         res = httpx.post(url, data=data, headers=headers)
         res.raise_for_status()
-        return self.parse_response(res)
+        return res.text
 
-    def delete(self, url, params=None, headers=None):
+    @staticmethod
+    def delete(url, params=None, headers=None):
         res = httpx.delete(url, params=params, headers=headers)
         res.raise_for_status()
-        return self.parse_response(res)
+        return res.text
