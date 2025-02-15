@@ -8,7 +8,8 @@ authors = [
 license = {text = "Apache-2.0"}
 requires-python = ">=3.11"
 dependencies = [
-    "httpx (>=0.28.1,<0.29.0)"
+    "httpx (>=0.28.1,<0.29.0)",
+    "pydantic (>=2.10.6,<3.0.0)"
 ]
 
 [build-system]
@@ -20,4 +21,5 @@ ipdb = "^0.13.13"
 isort = "^6.0.0"
 black = "^25.1.0"
 pyflakes = "^3.2.0"
+datamodel-code-generator = "^0.28.1"
 
