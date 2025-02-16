@@ -1,5 +1,6 @@
-import httpx
 import logging
+
+import httpx
 
 from open_payments_sdk import configuration
 
