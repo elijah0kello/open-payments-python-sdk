@@ -18,8 +18,8 @@ class Client:
         return res.text
 
     @staticmethod
-    def post(url, data=None, headers=None):
-        res = httpx.post(url, data=data, headers=headers)
+    def post(url, json=None, headers=None):
+        res = httpx.post(url, json=json, headers=headers)
         res.raise_for_status()
         return res.text
 
