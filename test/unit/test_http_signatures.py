@@ -1,5 +1,5 @@
+import uuid
 import pytest
-import time
 import hashlib
 import base64
 from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
@@ -16,20 +16,31 @@ def sample_headers():
         "content-length": "18"
     }
 
+@pytest.fixture
+def private_key_str():
+    privkey = Ed25519PrivateKey.generate()
+    private_pem = privkey.private_bytes(
+            encoding=serialization.Encoding.PEM,
+            format=serialization.PrivateFormat.PKCS8,
+            encryption_algorithm=serialization.NoEncryption()
+        )
+    return private_pem.decode("utf-8")
+
 
 def test_build_signature_base(sample_headers):
     base = HTTPSignatureClient.build_signature_base(
         headers=sample_headers,
         method="POST",
-        target_uri="https://example.com/payments"
+        target_uri="https://example.com/payments",
+        key_id=uuid.uuid4()
     )
 
     # It should include all expected lines
-    assert '"content-type": application/json' in base
-    assert '"authorization": GNAP 123454321' in base
-    assert '"@method": POST' in base
-    assert '"@target-uri": https://example.com/payments' in base
-    assert "@signature-params" in base
+    assert '"content-type": application/json' in base.signature_base
+    assert '"authorization": GNAP 123454321' in base.signature_base
+    assert '"@method": POST' in base.signature_base
+    assert '"@target-uri": https://example.com/payments' in base.signature_base
+    assert "@signature-params" in base.signature_base
 
 
 def test_hash_signature_base_consistency():
@@ -46,20 +57,31 @@ def test_build_signature():
     hashed_signature_base = b'\x00' * 64  # Example hash
     private_key = Ed25519PrivateKey.generate()
     
-    private_key_bytes = private_key.private_bytes(
-        encoding=serialization.Encoding.Raw,
-        format=serialization.PrivateFormat.Raw,
+    private_key_pem = private_key.private_bytes(
+        encoding=serialization.Encoding.PEM,
+        format=serialization.PrivateFormat.PKCS8,
         encryption_algorithm=serialization.NoEncryption()
     )
 
-    # Convert to hex string
-    private_key_hex = private_key_bytes.hex()
-
     # Call the method to test
-    signature = HTTPSignatureClient.build_signature(hashed_signature_base, private_key_hex)
+    signature = HTTPSignatureClient.build_signature(hashed_signature_base, private_key_pem.decode("utf-8"))
 
     # Decode signature and check
     signature_bytes = base64.b64decode(signature)
     assert isinstance(signature, str)
     assert len(signature_bytes) == 64
+    
+def test_get_signature_headers(private_key_str,sample_headers):
+    signature_headers = HTTPSignatureClient.get_signature_headers(
+            headers=sample_headers,
+            method="POST",
+            target_uri="https://example.com/payments",
+            key_id=uuid.uuid4(),
+            private_key=private_key_str
+        )
+    print(f"Signature-Input: {signature_headers.signature_input}")
+    print(f"Signature: {signature_headers.signature}")
+    assert "alg=\"ed25519\"" in signature_headers.signature_input
+    assert "keyid=" in signature_headers.signature_input
+    assert signature_headers.signature_input.startswith('("content-type"')
     
