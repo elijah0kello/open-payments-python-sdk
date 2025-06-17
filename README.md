@@ -19,14 +19,37 @@ Open Payments is an open API standard that can be implemented by account servici
 
 An Open Payments server runs two sub-systems, a resource server which exposes APIs for performing functions against the underlying accounts and authorization server which exposes APIs compliant with the GNAP standard for getting grants to access the resource server APIs.
 
-## Local development
-
 ### Dependencies
 
+- Interledger
+
+New to Interledger?
+Never heard of Interledger before? Or would you like to learn more? Here are some excellent places to start:
+
+- [Interledger Website](https://interledger.org/)
+- [Interledger Specification](https://interledger.org/developers/rfcs/interledger-protocol/)
+- [Interledger Explainer Video](https://x.com/Interledger/status/1567916000074678272)
+- [Open Payments](https://openpayments.dev/)
+- [Web monetization](https://webmonetization.org/)
+
+
+## Local development
+
+
+
 - Python >= 3.11
+
+  To install python visit [Python Download](https://www.python.org/downloads/)
 - Poetry
+  To install poetry visiit [Poetry Documentation](https://python-poetry.org/docs/)
 
 ### Installation
+
+1. Activate your virtual emvironment. No need to create one, Poetry creates one. 
+   [Read Poetry documentation](https://python-poetry.org/docs/managing-environments/)  to read how to activate
+
+
+2. Install the dependencies un the poetry.lock
 
 ```
 > poetry install
