@@ -4,7 +4,6 @@ from open_payments_sdk.models.keys import KeyJwks, KeyPair
 
 def test_key_generation():
     key_result = KeyManager.generate_key_pair()
-    print(key_result)
     assert isinstance(key_result, KeyPair)
     assert isinstance(key_result.jwks, KeyJwks)
     assert len(key_result.jwks.keys) == 1
