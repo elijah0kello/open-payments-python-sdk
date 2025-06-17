@@ -52,3 +52,5 @@ If you would like to learn more about Interledger, here are some excellent resou
 ```
 > poetry install
 ```
+# Usage 
+To use the library, you will need to install it.

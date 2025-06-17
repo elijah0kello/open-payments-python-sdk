@@ -1,7 +1,6 @@
 from pydantic import BaseModel, ConfigDict
 from typing import List
 
-
 class Key(BaseModel):
     kid: str
     x: str
@@ -20,3 +19,4 @@ class KeyJwks(BaseModel):
 class KeyPair(BaseModel):
     jwks: KeyJwks
     private_key_pem: str
+    

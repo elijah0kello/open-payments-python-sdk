@@ -7,8 +7,7 @@ from open_payments_sdk.models.keys import Key, KeyJwks, KeyPair
 
 class KeyManager:
 
-    @staticmethod
-    def generate_key_pair() -> KeyPair:
+    def generate_key_pair(self) -> KeyPair:
         private_key = Ed25519PrivateKey.generate()
         public_key = private_key.public_key()
         private_pem = private_key.private_bytes(
@@ -31,13 +30,13 @@ class KeyManager:
             crv="Ed25519"
         )
         key_jwks = KeyJwks(keys=[key])
-        return KeyPair(jwks=key_jwks, private_key_pem=private_key_pem)
+        keypair = KeyPair(jwks=key_jwks, private_key_pem=private_key_pem)
+        return KeyPair.model_validate(keypair)
     
-    @staticmethod
-    def load_ed25519_private_key_from_pem(pem_str: str) -> Ed25519PrivateKey:
+    def load_ed25519_private_key_from_pem(self,pem_str: str) -> Ed25519PrivateKey:
         private_key = serialization.load_pem_private_key(
             data=pem_str.encode("utf-8"),
-            password=None 
+            password=None
         )
 
         if not isinstance(private_key, Ed25519PrivateKey):
