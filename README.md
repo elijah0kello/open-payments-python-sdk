@@ -19,12 +19,10 @@ Open Payments is an open API standard that can be implemented by account servici
 
 An Open Payments server runs two sub-systems, a resource server which exposes APIs for performing functions against the underlying accounts and authorization server which exposes APIs compliant with the GNAP standard for getting grants to access the resource server APIs.
 
-### Dependencies
 
-- Interledger
+## Interledger
 
-New to Interledger?
-Never heard of Interledger before? Or would you like to learn more? Here are some excellent places to start:
+If you would like to learn more about Interledger, here are some excellent resources:
 
 - [Interledger Website](https://interledger.org/)
 - [Interledger Specification](https://interledger.org/developers/rfcs/interledger-protocol/)
