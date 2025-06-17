@@ -34,6 +34,14 @@ class Grants:
         url = f"{base_url}/continue/{req_id}"
         self.http_client.delete(url)
 
+
+class AccessTokens:
+    def __init__(self, auth_server_endpoint: str, http_client: HttpClient = None):
+        if not http_client:
+            cfg = Configuration()
+            http_client = HttpClient(cfg)
+
+        self.http_client = http_client
         self.auth_server_endpoint = auth_server_endpoint
 
     def post_rotate_access_token(self, token_id: str) -> AccessToken:
@@ -46,12 +54,3 @@ class Grants:
         base_url = self.auth_server_endpoint.rstrip("/")
         url = f"{base_url}/token/{token_id}"
         self.http_client.delete(url)
-
-
-class AccessTokens:
-    def __init__(self, auth_server_endpoint: str, http_client: HttpClient = None):
-        if not http_client:
-            cfg = Configuration()
-            http_client = HttpClient(cfg)
-
-        self.http_client = http_client
