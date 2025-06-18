@@ -14,10 +14,10 @@ def wallet_address_server(request):
 
 
 def test_get_wallet_address(wallet_address_server):
-    wallet = Wallet(wallet_address_server)
-    wallet.get_wallet_address()
+    wallet = Wallet()
+    wallet.get_wallet_address(wallet_address_server)
 
 
 def test_get_wallet_address_keys(wallet_address_server):
-    wallet = Wallet(wallet_address_server)
-    wallet.get_keys()
+    wallet = Wallet()
+    wallet.get_keys(wallet_address_server)
