@@ -3,7 +3,9 @@ name = "open-payments-sdk"
 version = "0.1.0"
 description = "Python SDK implementation for open-payments API"
 authors = [
-    {name = "Yiannis Giannelos",email = "johngiannelos@gmail.com"}
+    {name = "Yiannis Giannelos",email = "johngiannelos@gmail.com"},
+    {name = "Elijah Okello", email = "elijahokello90@gmail.com"},
+    {name = "Kasweka Michael Mukoko", email = "kasweka.mukoko@izyane.com"}
 ]
 license = {text = "Apache-2.0"}
 requires-python = ">=3.11"
