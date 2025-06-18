@@ -1,7 +1,7 @@
 import pytest
-from client.client import OpenPayemntsClient
 from open_payments_sdk.api.auth import AccessTokens, Grants
 from open_payments_sdk.api.resource import IncomingPayments, OutgoingPayments, Quotes
+from open_payments_sdk.client.client import OpenPayemntsClient
 from open_payments_sdk.gnap_utils.keys import KeyManager
 
 @pytest.fixture
