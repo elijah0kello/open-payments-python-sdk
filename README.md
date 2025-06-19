@@ -70,12 +70,12 @@ pip install </path/to/>open-payments-python-sdk/dist/open_payments_sdk-0.1.0-py3
 To create a client you can do so by importing the `OpenPaymentsClient` defined in the [`client`](./src/client/client.py) module and instantiating it.
 
 ```python
-from open_payments_sdk.client.client import OpenPayemntsClient
+from open_payments_sdk.client.client import OpenPaymentsClient
 
 with open("privkey.pem","r",encoding="utf_8") as privkey:
     private_key = privkey.read()
 
-op_client = OpenPayemntsClient(keyid="27b4f8d2-746c-4522-b3f0-874ca15bfe65",private_key=private_key)
+op_client = OpenPaymentsClient(keyid="27b4f8d2-746c-4522-b3f0-874ca15bfe65",private_key=private_key)
 ```
 
 The client is to be created after you have created a key pair and have obtained the `kid` and `private_key`
