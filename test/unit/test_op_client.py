@@ -1,7 +1,7 @@
 import pytest
 from open_payments_sdk.api.auth import AccessTokens, Grants
 from open_payments_sdk.api.resource import IncomingPayments, OutgoingPayments, Quotes
-from open_payments_sdk.client.client import OpenPayemntsClient
+from open_payments_sdk.client.client import OpenPaymentsClient
 from open_payments_sdk.gnap_utils.keys import KeyManager
 
 @pytest.fixture
@@ -16,7 +16,7 @@ def keyid_private_key() -> dict:
 def test_create_op_client(keyid_private_key):
     keyid = keyid_private_key["keyid"]
     private_key = keyid_private_key["private_key"]
-    client = OpenPayemntsClient(keyid=keyid_private_key["keyid"],private_key=keyid_private_key["private_key"])
+    client = OpenPaymentsClient(keyid=keyid_private_key["keyid"],private_key=keyid_private_key["private_key"])
 
     assert client.keyid == keyid
     assert client.private_key == private_key

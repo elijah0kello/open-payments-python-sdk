@@ -8,7 +8,7 @@ from open_payments_sdk.api.wallet import Wallet
 from open_payments_sdk.http import HttpClient
 
 
-class OpenPayemntsClient:
+class OpenPaymentsClient:
     """
     Open Payments API Client
     """
