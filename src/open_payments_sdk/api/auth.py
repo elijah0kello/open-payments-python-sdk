@@ -5,7 +5,7 @@ from logging import Logger
 
 from open_payments_sdk.gnap_utils.security import SecurityBase
 from open_payments_sdk.http import HttpClient
-from open_payments_sdk.models.auth import AccessToken, GrantResponse, InteractionInstructionsResponse
+from open_payments_sdk.models.auth import AccessToken
 from open_payments_sdk.models.auth import Grant as AuthGrant
 from open_payments_sdk.models.auth import (GrantContinueResponse, GrantRequest,
                                            InteractRef)
