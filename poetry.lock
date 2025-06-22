@@ -374,6 +374,43 @@ files = [
 ]
 
 [[package]]
+name = "http-message-signatures"
+version = "0.6.1"
+description = "An implementation of the IETF HTTP Message Signatures draft standard"
+optional = false
+python-versions = ">=3.8"
+groups = ["main"]
+files = [
+    {file = "http_message_signatures-0.6.1-py3-none-any.whl", hash = "sha256:210346bfcf1e90c5877b90b4f0f7fd0e20128087d488b4b300e01daf1e002d75"},
+    {file = "http_message_signatures-0.6.1.tar.gz", hash = "sha256:e0c409b1529826e90a75563d892db82eba1d1afae95b14e242f9221e8b9382e4"},
+]
+
+[package.dependencies]
+cryptography = ">=36.0.2"
+http-sfv = ">=0.9.3"
+
+[package.extras]
+tests = ["build", "coverage", "flake8", "mypy", "requests", "ruff", "wheel"]
+
+[[package]]
+name = "http-sfv"
+version = "0.9.9"
+description = "Parse and serialise HTTP Structured Field Values"
+optional = false
+python-versions = ">=3.8"
+groups = ["main"]
+files = [
+    {file = "http_sfv-0.9.9-py3-none-any.whl", hash = "sha256:5feed51c90e9a1dc797701662d044d936923cf0027255c75452b8240e33d6c82"},
+    {file = "http_sfv-0.9.9.tar.gz", hash = "sha256:e132dc9bef990832bc01824f5fa9d4efc7d0f4271e4b227db35c8ef38540c739"},
+]
+
+[package.dependencies]
+typing-extensions = "*"
+
+[package.extras]
+dev = ["black", "mypy"]
+
+[[package]]
 name = "httpcore"
 version = "1.0.7"
 description = "A minimal low-level HTTP client."
@@ -1177,4 +1214,4 @@ files = [
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.11"
-content-hash = "00ebbcef62c2ae9758433586af70f5a34f94a808eb18a27e838c8d743fd4854e"
+content-hash = "31aa5dce166c2ac6b7581ee4b80386c306756ea07368184a423dffa2827e3be9"

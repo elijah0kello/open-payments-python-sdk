@@ -1,23 +1,21 @@
-import pytest
+"""
+Unit Tests for OP Client
+"""
 from open_payments_sdk.api.auth import AccessTokens, Grants
 from open_payments_sdk.api.resource import IncomingPayments, OutgoingPayments, Quotes
 from open_payments_sdk.client.client import OpenPaymentsClient
-from open_payments_sdk.gnap_utils.keys import KeyManager
-
-@pytest.fixture
-def keyid_private_key() -> dict:
-    key_manager = KeyManager()
-    key_pair = key_manager.generate_key_pair()
-    return {
-        "private_key": key_pair.private_key_pem,
-        "keyid": key_pair.jwks.keys[0].kid
-    }
 
 def test_create_op_client(keyid_private_key):
+    """
+    Test OP client creation
+    """
     keyid = keyid_private_key["keyid"]
     private_key = keyid_private_key["private_key"]
-    client = OpenPaymentsClient(keyid=keyid_private_key["keyid"],private_key=keyid_private_key["private_key"])
-
+    client = OpenPaymentsClient(
+        keyid=keyid_private_key["keyid"],
+        private_key=keyid_private_key["private_key"],
+        client_wallet_address="https://ilp.interledger-test.dev/elijahokellosalary"
+    )
     assert client.keyid == keyid
     assert client.private_key == private_key
 
