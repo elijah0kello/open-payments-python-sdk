@@ -72,3 +72,12 @@ def grant_req_dto() -> GrantRequest:
     }
     }
     return GrantRequest(**grant_req)
+
+
+@pytest.fixture
+def interactive_grant_req_dto() -> GrantRequest: #TODO complete writing tests
+    """
+    Create Interactive Grant 
+    """
+    grant_req = {}
+    return GrantRequest(**grant_req)
