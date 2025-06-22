@@ -1,4 +1,8 @@
+"""
+    Key Management module
+"""
 import base64
+from typing import Union
 import uuid
 from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
 from cryptography.hazmat.primitives import serialization
@@ -6,8 +10,14 @@ from cryptography.hazmat.primitives import serialization
 from open_payments_sdk.models.keys import Key, KeyJwks, KeyPair
 
 class KeyManager:
+    """
+    Key Management class 
+    """
 
     def generate_key_pair(self) -> KeyPair:
+        """
+        Generate Key Pair
+        """
         private_key = Ed25519PrivateKey.generate()
         public_key = private_key.public_key()
         private_pem = private_key.private_bytes(
@@ -33,9 +43,15 @@ class KeyManager:
         keypair = KeyPair(jwks=key_jwks, private_key_pem=private_key_pem)
         return KeyPair.model_validate(keypair)
     
-    def load_ed25519_private_key_from_pem(self,pem_str: str) -> Ed25519PrivateKey:
+    def load_ed25519_private_key_from_pem(self,pem_str: Union[str, bytes]) -> Ed25519PrivateKey:
+        """
+        Read private key from str or bytes string
+        """
+        if isinstance(pem_str,str):
+            pem_str = pem_str.encode("utf-8")
+
         private_key = serialization.load_pem_private_key(
-            data=pem_str.encode("utf-8"),
+            data=pem_str,
             password=None
         )
 

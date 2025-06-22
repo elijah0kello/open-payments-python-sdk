@@ -315,10 +315,10 @@ class Grant(RootModel[Union[InteractionInstructionsResponse, GrantResponse]]):
     )
 
 
-class InteractRef(RootModel):
-    root: str = Field(
+class InteractRef(BaseModel):
+    interact_ref: str = Field(
         ...,
-        description="The interaction reference generated for this interaction by the AS.",
+        description="The interaction reference generated for this interaction by the AS."
     )
 
 

@@ -1,32 +1,43 @@
-import logging
-
+"""
+HTTP Client 
+"""
 import httpx
 
-from open_payments_sdk import configuration
-
-
 class HttpClient:
-    def __init__(self, cfg: configuration.Configuration = None):
-        if not cfg:
-            cfg = configuration.Configuration()
-        self.logger = logging.getLogger(__name__)
-        self.logger.addHandler(cfg.get_log_handler())
-        self.user_agent = cfg.user_agent
+    """
+    HTTP Client
+    """
+    http_timeout: float
 
-    @staticmethod
-    def get(url, params=None, headers=None):
-        res = httpx.get(url, params=params, headers=headers)
-        res.raise_for_status()
-        return res.text
+    def __init__(self, http_timeout: float):
+        self.http_timeout = http_timeout
 
-    @staticmethod
-    def post(url, json=None, headers=None):
-        res = httpx.post(url, content=json, headers=headers)
-        res.raise_for_status()
-        return res.text
+    def build_request(
+            self,
+            method: str,
+            url: str,
+            headers = None,
+            data = None,
+            json: dict = None,
+            params: dict = None
+    ) -> httpx.Request:
+        """
+        Build httpx request
+        """
+        return httpx.Request(
+            method=method,
+            url=url,
+            headers=headers,
+            json=json,
+            data=data,
+            params=params
+        )
 
-    @staticmethod
-    def delete(url, params=None, headers=None):
-        res = httpx.delete(url, params=params, headers=headers)
+    def send(self, request: httpx.Request) -> httpx.Response:
+        """
+        Make an http request
+        """ 
+        with httpx.Client(timeout=self.http_timeout) as client:
+            res = client.send(request=request)
         res.raise_for_status()
-        return res.text
+        return res

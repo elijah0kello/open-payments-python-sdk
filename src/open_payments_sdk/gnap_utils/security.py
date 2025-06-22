@@ -1,10 +1,15 @@
 """
 Shared class for making secure requests
 """
-import base64
+
 import hashlib
+from logging import Logger
+from typing import Sequence
+from http_message_signatures import HTTPMessageSigner, algorithms
+import http_sfv
+from httpx import Request
 from open_payments_sdk.gnap_utils.hash import HashManager
-from open_payments_sdk.gnap_utils.http_signatures import HTTPSignatureClient
+from open_payments_sdk.gnap_utils.http_signatures import OPKeyResolver, PatchedHTTPSignatureComponentResolver
 from open_payments_sdk.gnap_utils.keys import KeyManager
 
 
@@ -12,49 +17,52 @@ class SecurityBase():
     """
     Base class to provide shared functionality for making authenticated requests
     """
-    def __init__(self, keyid: str, private_key: str):
+    def __init__(self, keyid: str, private_key: str, logger: Logger):
         self.key_manager = KeyManager()
         self.hash_manager = HashManager()
-        self.http_signatures = HTTPSignatureClient(self.key_manager)
+        self.http_signatures = HTTPMessageSigner(signature_algorithm=algorithms.ED25519, key_resolver=OPKeyResolver(keyid=keyid,private_key=private_key),component_resolver_class=PatchedHTTPSignatureComponentResolver)
         self.keyid = keyid
         self.private_key = private_key
+        self.logger = logger
 
     def get_auth_header(self, access_token: str) -> dict:
         """
         Prepare Authorization GNAP header
         """
         return {
-            "authorization": f"GNAP {access_token}"
+            "Authorization": f"GNAP {access_token}"
         }
     
-    def get_signature_headers(self, headers: dict, method: str, target_uri: str)-> dict:
+    def sign_request(self, message: Request, covered_component_ids: Sequence[str] )-> Request:
         """
         Prepare http signature headers
         """
-        signature_headers = self.http_signatures.get_signature_headers(
-            headers=headers,
-            method=method,
-            target_uri=target_uri.rstrip("/"),
+        self.http_signatures.sign(
+            message=message,
             key_id=self.keyid,
-            private_key=self.private_key)
-        return {
-            "Signature-Input":signature_headers.signature_input,
-            "Signature": signature_headers.signature
-        }
+            covered_component_ids=covered_component_ids,
+            label="sig1"
+        )
+        return message
 
     def get_default_headers(self) -> dict:
         """
         Get default headers
         """
         return {
-            "content-type": "application/json"
+            "Content-Type": "application/json"
         }
-       
-    def get_content_digest(self, data: bytes) -> str:
+
+    def get_default_covered_components(self) -> tuple:
+        """
+        Return default covered components
+        """
+        return ("@method","@target-uri")
+    
+    def set_content_digest(self, request: Request) -> Request:
         """
         Compute Digest
         """
-        sha512_hash = hashlib.sha512(data).digest()
-        b64_hash = base64.b64encode(sha512_hash).decode('ascii')
-        return f"sha-512=:{b64_hash}:"
+        request.headers["Content-Digest"] = str(http_sfv.Dictionary({"sha-512": hashlib.sha512(request.content).digest()}))
+        return request
     
