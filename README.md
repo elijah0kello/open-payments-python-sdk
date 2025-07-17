@@ -27,7 +27,7 @@ An Open Payments server runs two sub-systems, a resource server which exposes AP
 
   To install python visit [Python Download](https://www.python.org/downloads/)
 - Poetry
-  To install poetry visiit [Poetry Documentation](https://python-poetry.org/docs/)
+  To install poetry visit [Poetry Documentation](https://python-poetry.org/docs/).
 
 ### Installation
 
