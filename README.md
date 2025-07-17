@@ -32,7 +32,7 @@ An Open Payments server runs two sub-systems, a resource server which exposes AP
 ### Installation
 
 1. Activate your virtual emvironment. No need to create one, Poetry creates one. 
-   [Read Poetry documentation](https://python-poetry.org/docs/managing-environments/)  to read how to activate
+   Read [managing environments in Poetry](https://python-poetry.org/docs/managing-environments/).
 
 
 2. Install the dependencies in the poetry.lock
