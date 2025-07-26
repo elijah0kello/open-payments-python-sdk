@@ -30,8 +30,7 @@ jobs:
         if: runner.os == 'Windows'
         run: |
           (Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | py -
-          echo "$env:USERPROFILE\.local\bin" | Out-File -Append -Encoding ascii $env:GITHUB_PATH
-          echo 'if (-not (Get-Command poetry -ErrorAction Ignore)) { $env:Path += ";C:\Users\runneradmin\AppData\Roaming\Python\Scripts" }' | Out-File -Append $PROFILE
+          echo "$env:APPDATA\Python\Scripts" >> $env:GITHUB_PATH
           poetry config virtualenvs.create false
 
       - name: Setup Poetry on Ubuntu
