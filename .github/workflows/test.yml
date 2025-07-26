@@ -30,6 +30,8 @@ jobs:
         if: runner.os == 'Windows'
         run: |
           (Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | py -
+          echo $env:APPDATA\Python\Scripts
+          dir $env:APPDATA\Python\Scripts
           echo "$env:APPDATA\Python\Scripts" >> $env:GITHUB_PATH
           poetry config virtualenvs.create false
 
