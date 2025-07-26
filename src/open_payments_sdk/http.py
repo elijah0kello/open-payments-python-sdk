@@ -1,7 +1,7 @@
 """
 HTTP Client 
 """
-import httpx
+from httpx import Request, Response, Client
 
 class HttpClient:
     """
@@ -20,11 +20,11 @@ class HttpClient:
             data = None,
             json: dict = None,
             params: dict = None
-    ) -> httpx.Request:
+    ) -> Request:
         """
-        Build httpx request
+        Build request
         """
-        return httpx.Request(
+        return Request(
             method=method,
             url=url,
             headers=headers,
@@ -33,11 +33,11 @@ class HttpClient:
             params=params
         )
 
-    def send(self, request: httpx.Request) -> httpx.Response:
+    def send(self, request: Request) -> Response:
         """
         Make an http request
         """ 
-        with httpx.Client(timeout=self.http_timeout) as client:
+        with Client(timeout=self.http_timeout) as client:
             res = client.send(request=request)
         res.raise_for_status()
         return res

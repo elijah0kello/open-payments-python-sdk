@@ -43,15 +43,15 @@ class KeyManager:
         keypair = KeyPair(jwks=key_jwks, private_key_pem=private_key_pem)
         return KeyPair.model_validate(keypair)
     
-    def load_ed25519_private_key_from_pem(self,pem_str: Union[str, bytes]) -> Ed25519PrivateKey:
+    def load_ed25519_private_key_from_pem(self,pem_bytes: Union[str, bytes]) -> Ed25519PrivateKey:
         """
         Read private key from str or bytes string
         """
-        if isinstance(pem_str,str):
-            pem_str = pem_str.encode("utf-8")
+        if isinstance(pem_bytes,str):
+            pem_bytes = pem_bytes.encode("utf-8")
 
         private_key = serialization.load_pem_private_key(
-            data=pem_str,
+            data=pem_bytes,
             password=None
         )
 

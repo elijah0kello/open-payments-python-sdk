@@ -44,20 +44,6 @@ class SecurityBase():
             label="sig1"
         )
         return message
-
-    def get_default_headers(self) -> dict:
-        """
-        Get default headers
-        """
-        return {
-            "Content-Type": "application/json"
-        }
-
-    def get_default_covered_components(self) -> tuple:
-        """
-        Return default covered components
-        """
-        return ("@method","@target-uri")
     
     def set_content_digest(self, request: Request) -> Request:
         """

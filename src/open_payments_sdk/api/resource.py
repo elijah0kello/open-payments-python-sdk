@@ -13,6 +13,7 @@ from open_payments_sdk.models.resource import (IncomingPayment,
                                                PaginatedOutgoingPayments,
                                                PaymentListQuery, Quote,
                                                QuoteRequest)
+from open_payments_sdk.utils.utils import get_default_covered_components, get_default_headers
 
 
 class IncomingPayments(SecurityBase):
@@ -36,7 +37,7 @@ class IncomingPayments(SecurityBase):
         url = f"{base_url}/incoming-payments"
         data = payment.model_dump(exclude_unset=True, mode="json")
         req_headers = {
-            **self.get_default_headers(),
+            **get_default_headers(),
             **self.get_auth_header(access_token=access_token)
         }
         request = self.http_client.build_request(
@@ -46,7 +47,7 @@ class IncomingPayments(SecurityBase):
             headers=req_headers
         )
         request = self.set_content_digest(request=request)
-        request = self.sign_request(request,("content-type","content-digest","content-length","authorization",*self.get_default_covered_components()))
+        request = self.sign_request(request,("content-type","content-digest","content-length","authorization",*get_default_covered_components()))
         response = self.http_client.send(request=request)
         return IncomingPayment.model_validate(response.json())
 
@@ -70,7 +71,7 @@ class IncomingPayments(SecurityBase):
             headers=req_headers,
             params=query_params
         )
-        request = self.sign_request(request,("authorization",*self.get_default_covered_components()))
+        request = self.sign_request(request,("authorization",*get_default_covered_components()))
         response = self.http_client.send(request=request)
         return PaginatedIncomingPayments.model_validate(response.json())
 
@@ -93,7 +94,7 @@ class IncomingPayments(SecurityBase):
             url=url,
             headers=req_headers
         )
-        request = self.sign_request(request,("authorization",*self.get_default_covered_components()))
+        request = self.sign_request(request,("authorization",*get_default_covered_components()))
         response = self.http_client.send(request=request)
         return IncomingPaymentResponse.model_validate(response.json())
 
@@ -116,7 +117,7 @@ class IncomingPayments(SecurityBase):
             url=url,
             headers=req_headers
         )
-        request = self.sign_request(request,("authorization",*self.get_default_covered_components()))
+        request = self.sign_request(request,("authorization",*get_default_covered_components()))
         response = self.http_client.send(request=request)
         return IncomingPayment.model_validate(response.json())
 
@@ -141,7 +142,7 @@ class OutgoingPayments(SecurityBase):
         url = f"{base_url}/outgoing-payments"
         data = payment.model_dump(exclude_unset=True, mode="json")
         req_headers = {
-            **self.get_default_headers(),
+            **get_default_headers(),
             **self.get_auth_header(access_token=access_token)
         }
         request = self.http_client.build_request(
@@ -151,7 +152,7 @@ class OutgoingPayments(SecurityBase):
             headers=req_headers
         )
         request = self.set_content_digest(request=request)
-        request = self.sign_request(request,("content-type","content-digest","content-length","authorization",*self.get_default_covered_components()))
+        request = self.sign_request(request,("content-type","content-digest","content-length","authorization",*get_default_covered_components()))
         response = self.http_client.send(request=request)
         return OutgoingPayment.model_validate(response.json())
 
@@ -176,7 +177,7 @@ class OutgoingPayments(SecurityBase):
             headers=req_headers,
             params=query_params
         )
-        response = request = self.sign_request(request,("authorization",*self.get_default_covered_components()))
+        response = request = self.sign_request(request,("authorization",*get_default_covered_components()))
         self.http_client.send(request=request)
         return PaginatedOutgoingPayments.model_validate(response.json())
 
@@ -198,7 +199,7 @@ class OutgoingPayments(SecurityBase):
             url=url,
             headers=req_headers
         )
-        request = self.sign_request(request,("authorization",*self.get_default_covered_components()))
+        request = self.sign_request(request,("authorization",*get_default_covered_components()))
         response = self.http_client.send(request=request)
         return OutgoingPayment.model_validate(response.json())
 
@@ -223,7 +224,7 @@ class Quotes(SecurityBase):
         url = f"{base_url}/quotes"
         data = quote.model_dump(exclude_unset=True, mode="json")
         req_headers = {
-            **self.get_default_headers(),
+            **get_default_headers(),
             **self.get_auth_header(access_token=access_token)
         }
         request = self.http_client.build_request(
@@ -233,7 +234,7 @@ class Quotes(SecurityBase):
             json=data
         )
         request = self.set_content_digest(request=request)
-        request = self.sign_request(request,("content-type","content-digest","content-length","authorization",*self.get_default_covered_components()))
+        request = self.sign_request(request,("content-type","content-digest","content-length","authorization",*get_default_covered_components()))
         response = self.http_client.send(request=request)
         return Quote.model_validate(response.json())
 
@@ -256,6 +257,6 @@ class Quotes(SecurityBase):
             url=url,
             headers=req_headers
         )
-        request = self.sign_request(request,("authorization",*self.get_default_covered_components()))
+        request = self.sign_request(request,("authorization",*get_default_covered_components()))
         response = self.http_client.send(request=request)
         return Quote.model_validate(response.json())

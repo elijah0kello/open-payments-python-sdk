@@ -1,7 +1,7 @@
 from enum import Enum
-from typing import List, Optional, Union
+from typing import Any, List, Optional, Union
 
-from pydantic import AnyUrl, BaseModel, ConfigDict, Field, RootModel, conint
+from pydantic import AnyUrl, BaseModel, ConfigDict, Field, RootModel, conint, model_validator, root_validator
 
 
 class TypeIncoming(Enum):
@@ -296,13 +296,27 @@ class GrantRequest(BaseModel):
     client: Client
     interact: Optional[InteractRequest] = None
 
+class ReservedKeyMappingModel(BaseModel):
+    """
+    Base class that maps 'continue' to 'cont' in incoming data.
+    """
 
-class InteractionInstructionsResponse(BaseModel):
+    @model_validator(mode='before')
+    @classmethod
+    def replace_continue_key(cls, values: Any) -> Any:
+        """
+        Map continue to cont
+        """
+        if isinstance(values, dict) and "continue" in values:
+            values["cont"] = values.pop("continue")
+        return values
+
+class InteractionInstructionsResponse(ReservedKeyMappingModel):
     interact: InteractResponse
     cont: Continue
 
 
-class GrantResponse(BaseModel):
+class GrantResponse(ReservedKeyMappingModel):
     access_token: AccessToken
     cont: Continue
 

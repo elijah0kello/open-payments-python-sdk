@@ -5,10 +5,10 @@ from logging import Logger
 
 from open_payments_sdk.gnap_utils.security import SecurityBase
 from open_payments_sdk.http import HttpClient
-from open_payments_sdk.models.auth import AccessToken
-from open_payments_sdk.models.auth import Grant as AuthGrant
+from open_payments_sdk.models.auth import AccessToken, Grant
 from open_payments_sdk.models.auth import (GrantContinueResponse, GrantRequest,
                                            InteractRef)
+from open_payments_sdk.utils.utils import get_default_covered_components, get_default_headers
 
 
 
@@ -25,14 +25,14 @@ class Grants(SecurityBase):
             self,
             grant_request: GrantRequest,
             auth_server_endpoint: str,
-        ) -> AuthGrant:
+        ) -> Grant:
         """
         Grant Request
         """
         data = grant_request.model_dump(exclude_unset=True, mode="json")
 
         req_headers = {
-            **self.get_default_headers()
+            **get_default_headers()
         }
         request = self.http_client.build_request(
             method="POST",
@@ -41,9 +41,9 @@ class Grants(SecurityBase):
             headers=req_headers
         )
         request = self.set_content_digest(request=request)
-        request = self.sign_request(request,("content-type","content-digest","content-length",*self.get_default_covered_components()))
+        request = self.sign_request(request,("content-type","content-digest","content-length",*get_default_covered_components()))
         response = self.http_client.send(request=request)
-        return response.json()
+        return Grant.model_validate(response.json())
 
     def post_grant_continuation_request(
             self,
@@ -56,7 +56,7 @@ class Grants(SecurityBase):
         """
         data = interact_ref.model_dump(exclude_unset=True, mode="json")
         req_headers = {
-            **self.get_default_headers(),
+            **get_default_headers(),
             **self.get_auth_header(access_token=access_token)
         }
         request = self.http_client.build_request(
@@ -66,7 +66,7 @@ class Grants(SecurityBase):
             headers=req_headers
         )
         request = self.set_content_digest(request=request)
-        request = self.sign_request(request,("content-type","content-digest","content-length","authorization",*self.get_default_covered_components()))
+        request = self.sign_request(request,("content-type","content-digest","content-length","authorization",*get_default_covered_components()))
         response = self.http_client.send(request=request)
         return GrantContinueResponse.model_validate(response.json())
 
@@ -89,7 +89,7 @@ class Grants(SecurityBase):
             url=url,
             headers=req_headers
         )
-        request = self.sign_request(request,("authorization",*self.get_default_covered_components()))
+        request = self.sign_request(request,("authorization",*get_default_covered_components()))
         self.http_client.send(request=request)
 
 class AccessTokens(SecurityBase):
@@ -119,7 +119,7 @@ class AccessTokens(SecurityBase):
             url=url,
             headers=req_headers
         )
-        request = self.sign_request(request,("authorization",*self.get_default_covered_components()))
+        request = self.sign_request(request,("authorization",*get_default_covered_components()))
         response = self.http_client.send(request=request)
         return AccessToken.model_validate(response.json())
 
@@ -143,5 +143,5 @@ class AccessTokens(SecurityBase):
             url=url,
             headers=req_headers
         )
-        request = self.sign_request(request,("authorization",*self.get_default_covered_components()))
+        request = self.sign_request(request,("authorization",*get_default_covered_components()))
         self.http_client.send(request=request)
