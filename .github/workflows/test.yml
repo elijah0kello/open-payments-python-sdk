@@ -30,10 +30,14 @@ jobs:
         if: runner.os == 'Windows'
         run: |
           (Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | py -
-          echo $env:APPDATA\Python\Scripts
-          dir $env:APPDATA\Python\Scripts
           echo "$env:APPDATA\Python\Scripts" >> $env:GITHUB_PATH
+      
+      - name: Verify Poetry and create env on Windows
+        if: runner.os == 'Windows'
+        run: |
+          poetry --version
           poetry config virtualenvs.create false
+            
 
       - name: Setup Poetry on Ubuntu
         if: runner.os != 'Windows'
