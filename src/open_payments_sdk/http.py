@@ -1,30 +1,43 @@
-import logging
+"""
+HTTP Client 
+"""
+from httpx import Request, Response, Client
 
-import httpx
+class HttpClient:
+    """
+    HTTP Client
+    """
+    http_timeout: float
 
-from open_payments_sdk import configuration
+    def __init__(self, http_timeout: float):
+        self.http_timeout = http_timeout
 
+    def build_request(
+            self,
+            method: str,
+            url: str,
+            headers = None,
+            data = None,
+            json: dict = None,
+            params: dict = None
+    ) -> Request:
+        """
+        Build request
+        """
+        return Request(
+            method=method,
+            url=url,
+            headers=headers,
+            json=json,
+            data=data,
+            params=params
+        )
 
-class Client:
-    def __init__(self, cfg: configuration.Configuration):
-        self.logger = logging.getLogger(__name__)
-        self.logger.addHandler(cfg.get_log_handler())
-        self.user_agent = cfg.user_agent
-
-    @staticmethod
-    def get(url, params=None, headers=None):
-        res = httpx.get(url, params=params, headers=headers)
+    def send(self, request: Request) -> Response:
+        """
+        Make an http request
+        """ 
+        with Client(timeout=self.http_timeout) as client:
+            res = client.send(request=request)
         res.raise_for_status()
-        return res.text
-
-    @staticmethod
-    def post(url, json=None, headers=None):
-        res = httpx.post(url, json=json, headers=headers)
-        res.raise_for_status()
-        return res.text
-
-    @staticmethod
-    def delete(url, params=None, headers=None):
-        res = httpx.delete(url, params=params, headers=headers)
-        res.raise_for_status()
-        return res.text
+        return res

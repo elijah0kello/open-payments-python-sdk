@@ -1,0 +1,67 @@
+name: Test Python open payments sdk
+
+on:
+  push:
+    branches:
+      - '**'
+  pull_request:
+    branches:
+      - '**'
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python-version: ["3.10","3.11","3.12","3.13"]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Setup Poetry on Windows
+        if: runner.os == 'Windows'
+        run: |
+          (Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | py -
+          echo "$env:APPDATA\Python\Scripts" >> $env:GITHUB_PATH
+      
+      - name: Verify Poetry and create env on Windows
+        if: runner.os == 'Windows'
+        run: |
+          poetry --version
+          poetry config virtualenvs.create false
+            
+
+      - name: Setup Poetry on Ubuntu
+        if: runner.os != 'Windows'
+        run: |
+          curl -sSL https://install.python-poetry.org | python3 -
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+          poetry config virtualenvs.create false
+
+      - name: Install dependencies
+        run: |
+          poetry install --no-interaction --no-root
+          poetry install --only dev  
+
+      - name: Run Unit Tests
+        run: |
+          poetry run pytest tests/unit/
+          
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install dependencies
+        run: |
+          python3 -m pip install .  # assumes dependencies declared in pyproject.toml
+          python3 -m pip install pip-audit
+      - name: Run pip-audit
+        run: pip-audit .

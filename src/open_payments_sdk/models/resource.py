@@ -277,10 +277,9 @@ class IncomingPaymentRequest(BaseModel):
 
 
 class IncomingPaymentResponse(
-    RootModel(Union[PublicIncomingPayment, IncomingPaymentWithMethods])
+    RootModel[Union[PublicIncomingPayment, IncomingPaymentWithMethods]]
 ):
-    root: Union[PublicIncomingPayment, IncomingPaymentWithMethods]
-
+    pass
 
 class PaymentListQuery(BaseModel):
     walletAddress: WalletAddress
@@ -315,11 +314,9 @@ class OutgoingPaymentRequestWithIncoming(BaseModel):
 
 
 class OutgoingPaymentRequest(
-    RootModel(
-        Union[OutgoingPaymentRequestWithIncoming, OutgoingPaymentRequestWithQuote]
-    )
+    RootModel[Union[OutgoingPaymentRequestWithIncoming, OutgoingPaymentRequestWithQuote]]
 ):
-    root: Union[OutgoingPaymentRequestWithIncoming, OutgoingPaymentRequestWithQuote]
+    pass
 
 
 class PaginatedOutgoingPayments(BaseModel):
@@ -346,7 +343,8 @@ class QuoteFixedSent(QuoteRequestBase):
     debitAmount: Amount
 
 
+
 class QuoteRequest(
-    RootModel(Union[QuoteRequestBase, QuoteFixedSent, QuoteFixedReceive])
+    RootModel[Union[QuoteRequestBase, QuoteFixedSent, QuoteFixedReceive]]
 ):
-    root: Union[QuoteRequestBase, QuoteFixedSent, QuoteFixedReceive]
+    pass
